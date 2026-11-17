@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Node
+node_modules/
+
+# Build files
+frontend/dist/
+frontend/android/.gradle/
+frontend/android/**/build/
+
+# IDE
+.idea/
+.vscode/
+
+# Operating system
+.DS_Store
+Thumbs.db
