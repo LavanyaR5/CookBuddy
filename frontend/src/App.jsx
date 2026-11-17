@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import {
   Search,
@@ -12,7 +13,8 @@ import {
   Sparkles
 } from 'lucide-react';
 
-const API = 'http://127.0.0.1:5001/api';
+// Production Flask backend on Render
+const API = 'https://cookbuddy-api.onrender.com/api';
 
 const IMAGE_PLACEHOLDER =
   'https://placehold.co/600x400?text=Image+Not+Available';
@@ -87,7 +89,7 @@ const UI = {
   emptyDatabase:
     'Your local database is empty. Import a dataset to populate it.',
   backendError:
-    'Backend is not connected. Please start the Flask server.'
+    'Backend is not connected. Please try again shortly.'
 };
 
 const prettyTime = value => value || UI.notProvided;
@@ -214,7 +216,7 @@ function App() {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
 
-  // Search recipes in English.
+  // Search recipes using the deployed Flask backend.
   async function search(q = query, p = 1) {
     setLoading(true);
     setSelected(null);
@@ -260,14 +262,14 @@ function App() {
         setNotice(UI.emptyDatabase);
       }
     } catch (error) {
-      console.error(error);
+      console.error('Recipe API error:', error);
 
       setRecipes([]);
       setTotal(0);
       setNotice(UI.backendError);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   // Load recipes when the page opens.
